@@ -1,28 +1,46 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react';
+import IntroOverlay from './components/IntroOverlay.jsx';
+import BackgroundDecor from './components/BackgroundDecor.jsx';
+import Header from './components/Header.jsx';
+import MainSection from './components/MainSection.jsx';
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [showIntro, setShowIntro] = useState(true);
+
+  // Inject Google Fonts (Playfair Display for headings, Inter for body)
+  useEffect(() => {
+    const existing = document.querySelector('link[data-app-fonts]');
+    if (!existing) {
+      const link = document.createElement('link');
+      link.setAttribute('rel', 'stylesheet');
+      link.setAttribute('data-app-fonts', 'true');
+      link.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap';
+      document.head.appendChild(link);
+    }
+  }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
-          Vibe Coding Platform
-        </h1>
-        <p className="text-gray-600 mb-6">
-          Your AI-powered development environment
-        </p>
-        <div className="text-center">
-          <button
-            onClick={() => setCount(count + 1)}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-          >
-            Count is {count}
-          </button>
-        </div>
-      </div>
-    </div>
-  )
-}
+    <div className="min-h-screen relative" style={{ backgroundColor: '#faf7f2', color: '#5d4037', fontFamily: 'Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif' }}>
+      {showIntro && (
+        <IntroOverlay onFinish={() => setShowIntro(false)} duration={3600} />
+      )}
 
-export default App
+      <BackgroundDecor />
+
+      <div className="relative">
+        <Header />
+        <MainSection />
+      </div>
+
+      <footer className="mt-auto w-full pb-10">
+        <div className="mx-auto max-w-5xl px-6">
+          <div className="rounded-xl px-4 py-3" style={{ backgroundColor: '#fff', boxShadow: '0 8px 30px rgba(0,0,0,0.06)' }}>
+            <p className="text-sm" style={{ color: '#5d4037' }}>
+              Нежная палитра: кремовый фон, шалфейно-зелёный акцент, тёплый персиковый и шоколадный текст. Скругления и тонкие тени создают мягкое, заботливое настроение.
+            </p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
