@@ -3,6 +3,7 @@ import IntroOverlay from './components/IntroOverlay.jsx';
 import BackgroundDecor from './components/BackgroundDecor.jsx';
 import Header from './components/Header.jsx';
 import MainSection from './components/MainSection.jsx';
+import FeaturesSection from './components/FeaturesSection.jsx';
 
 export default function App() {
   const [showIntro, setShowIntro] = useState(true);
@@ -30,6 +31,7 @@ export default function App() {
       <div className="relative">
         <Header />
         <MainSection />
+        <FeaturesSection />
       </div>
 
       <footer className="mt-auto w-full pb-10">
